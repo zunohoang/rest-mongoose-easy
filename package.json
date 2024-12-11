@@ -1,7 +1,7 @@
 {
   "name": "rest-mongoose-easy",
   "version": "1.0.0",
-  "description": "",
+  "description": "A lightweight library for creating RESTful APIs with MongoDB and Mongoose.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -14,5 +14,13 @@
     "zunohoang"
   ],
   "author": "zunohoang",
-  "license": "ISC"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zunohoang/rest-mongoose-easy.git"
+  },
+  "bugs": {
+    "url": "https://github.com/zunohoang/rest-mongoose-easy/issues"
+  },
+  "homepage": "https://github.com/zunohoang/rest-mongoose-easy#readme"
 }
