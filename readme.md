@@ -2,6 +2,10 @@
 
 A lightweight and easy-to-use library for creating RESTful APIs with MongoDB and Mongoose. This library provides predefined routes for basic CRUD operations.
 
+##
+
+You can support me by giving this project a star and following me on github [zunohoang](https://github.com/zunohoang).
+
 ## Features
 
 - Simple integration with Express.js.
@@ -82,7 +86,7 @@ For each schema (e.g., `User`), the following endpoints will be generated:
 
 ## Contributing
 
-Contributions are welcome! Feel free to submit issues or pull requests on the [GitHub repository](#).
+Contributions are welcome! Feel free to submit issues or pull requests on the [GitHub repository](https://github.com/zunohoang/rest-mongoose-easy).
 
 ## License
 
