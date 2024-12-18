@@ -1,4 +1,15 @@
-# rest-mongoose-easy
+<div align="center">
+  <img src="https://zunohoang.github.io/rest-mongoose-easy/logo.webp" width="270" height="270" alt="Banner"/>
+  <h2> Rest-Mongoose-Easy</h2>
+
+[![GitHub Version](https://img.shields.io/badge/GITHUB-GITHUB.COM%2FZUNOHOANG%2FREST--MONGOOSE--EASY-success?style=for-the-badge&logo=github)](https://github.com/zunohoang/rest-mongoose-easy)
+[![NPM](https://img.shields.io/badge/NPM-rest--mongoose--easy-red?style=for-the-badge&logo=npm)](https://www.npmjs.com/package/rest-mongoose-easy)
+[![Stars](https://img.shields.io/github/stars/zunohoang/rest-mongoose-easy?style=for-the-badge&logo=github)](https://github.com/zunohoang/rest-mongoose-easy/stargazers)
+[![Latest Release](https://img.shields.io/github/v/release/zunohoang/rest-mongoose-easy?style=for-the-badge)](https://github.com/zunohoang/rest-mongoose-easy/releases)
+[![Last Commit](https://img.shields.io/github/last-commit/zunohoang/rest-mongoose-easy?style=for-the-badge)](https://github.com/zunohoang/rest-mongoose-easy/commits)
+
+
+</div>
 
 A lightweight and easy-to-use library for creating RESTful APIs with MongoDB and Mongoose. This library provides predefined routes for basic CRUD operations.
 
@@ -39,7 +50,7 @@ const UserSchema = new mongoose.Schema({
 const UserModel = mongoose.model('User', UserSchema);
 ```
 
-2. **Integrate with Express**
+2. **Integrate with Express (Basic)**
 
 Use the `rest-mongoose-easy` library to automatically generate RESTful routes for your models:
 
@@ -59,13 +70,16 @@ mongoose.connect('mongodb://localhost:27017/mydb', {
 
 const UserModel = require('./models/User');
 
-// Define your schemas
-const schemas = {
-    User: UserModel,
+// Define your configs
+const configs = {
+    user: {
+        schema: UserModel,
+    },
+    // other
 };
 
 // Start the REST service
-RestMongoMicro.start(schemas, app);
+RestMongoMicro.start(configs, app);
 
 app.listen(3000, () => {
     console.log('Server is running on port 3000');
@@ -83,6 +97,64 @@ For each schema (e.g., `User`), the following endpoints will be generated:
 | POST        | `/rmz/api/v1/users`    | Create a new user   |
 | PUT         | `/rmz/api/v1/users/:id`| Update a user by ID |
 | DELETE      | `/rmz/api/v1/users/:id`    | Delete a user by ID |
+
+4. **Integrate with Express (Advanced)**
+
+Use the `rest-mongoose-easy` library to automatically generate RESTful routes for your models:
+
+I added two fields `auth` and `response`:
+- `auth`: This function will be executed first when a request comes in. I provide you with three parameters `req`, `res`, `next` which you can freely customize and use. Below is an example.
+- `response`: This function will be executed after Mongoose returns the values. I provide you with two parameters `req` and `data`. The `data` is the result after the query, and you can customize it to suit your needs.
+
+```javascript
+restMongoMicro.start({
+    user: {
+        schema: require('./models/user.model'),
+        auth: (req, res, next) => {
+            // The library will provide you with req, res, next so you can freely customize...
+            // Example:
+            switch (req.method) {
+                case 'GET':
+                    /*
+                        You will code something here to authenticate, if authentication is successful then call next();
+                        if authentication fails you can customize res.json("error") for example
+                    */
+                    return next();
+                default:
+                    // bla bla
+                    return next();
+            }
+
+        },
+        response: (req, data) => {
+            // The library will provide you with req, data so you can freely customize...
+            // Example:
+            switch (req.method) {
+                case 'GET':
+                    /*
+                        It will return certain fields present in the fields array from the data
+                        The dataWithFields function is a function that you have to code yourself, I am just writing pseudo-code
+                    */
+                    const fields = ['_id', 'username', 'role'];
+                    const filteredData = dataWithFields(feilds);
+                    return {
+                        status: true,
+                        data: filteredData
+                    }
+                default:
+                    return {
+                        status: true,
+                        data: data
+                    }
+            }
+
+        }
+    },
+    course: {
+        schema: require('./models/course.model')
+    }
+}, app);
+```
 
 ## Contributing
 

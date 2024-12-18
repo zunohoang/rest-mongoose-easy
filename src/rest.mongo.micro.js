@@ -11,12 +11,13 @@ class RestMongoMicro {
         return RestMongoMicro.instance;
     }
 
-    start(schemas, app) {
+    start(configs, app) {
         console.log("STATUS: RUNNING LOAD RESTMONGO MICRO");
-        for (let key in schemas) {
-            const model = schemas[key];
-            const router = new RestMongoRouter(app, model, key);
-            router.createRouter();
+        for (let key in configs) {
+            const config = configs[key];
+            const model = configs[key].schema;
+            const router = new RestMongoRouter(app, model, key.toLowerCase() + "s");
+            router.createRouter(config.auth, config.response);
         }
 
         console.log("STATUS: RUNNING LOAD RESTMONGO MICRO SUCCESS");
